@@ -29,8 +29,8 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         txt_password = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         cmb_Tipo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bot_IniciarSesion = new javax.swing.JButton();
+        bot_Registrarse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,16 +113,21 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("Entrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bot_IniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bot_IniciarSesion.setText("Entrar");
+        bot_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bot_IniciarSesionActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("Olvidó su contraseña?");
+        bot_Registrarse.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bot_Registrarse.setText("Registrarse");
+        bot_Registrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bot_RegistrarseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,10 +139,10 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(234, 234, 234)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(215, 215, 215)
+                .addComponent(bot_Registrarse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(183, 183, 183))
         );
         layout.setVerticalGroup(
@@ -148,8 +153,8 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bot_Registrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
         );
 
@@ -160,7 +165,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_usuarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bot_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bot_IniciarSesionActionPerformed
         String user,pwd,tipo;
         user = txt_usuario.getText();
         pwd = txt_password.getText();
@@ -169,8 +174,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             Frm_Productos menu_admin = new Frm_Productos();
             menu_admin.setVisible(true);
             this.setVisible(false);
-        }
-        if(user.equals("cliente1") && pwd.equals("0000") && tipo.equals("Cliente")){
+        }else if(user.equals("cliente1") && pwd.equals("0000") && tipo.equals("Cliente")){
             Frm_ConfigProducto menu_client = new Frm_ConfigProducto();
             menu_client.setVisible(true);
             this.setVisible(false);
@@ -181,13 +185,19 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         }
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bot_IniciarSesionActionPerformed
+
+    private void bot_RegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bot_RegistrarseActionPerformed
+        Frm_Registro registro = new Frm_Registro();
+        registro.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bot_RegistrarseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bot_IniciarSesion;
+    private javax.swing.JButton bot_Registrarse;
     private javax.swing.JComboBox<String> cmb_Tipo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
