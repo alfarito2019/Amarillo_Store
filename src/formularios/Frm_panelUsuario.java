@@ -5,6 +5,10 @@
  */
 package formularios;
 
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Camilo Moreno
@@ -16,6 +20,14 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
      */
     public Frm_panelUsuario() {
         initComponents();
+        ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/producto.png"));
+        Icon productos = new ImageIcon(imagenProducto.getImage().getScaledInstance(but_nuestros_productos.getWidth(), but_nuestros_productos.getHeight(), Image.SCALE_DEFAULT));
+        but_nuestros_productos.setIcon(productos);
+        
+        ImageIcon imagenOfertas = new ImageIcon(getClass().getResource("/imagenes/ofertas.png"));
+        Icon ofertas = new ImageIcon(imagenOfertas.getImage().getScaledInstance(but_ofertas_recientes.getWidth(), but_ofertas_recientes.getHeight(), Image.SCALE_DEFAULT));
+        but_ofertas_recientes.setIcon(ofertas);
+        this.repaint();
     }
 
     /**
@@ -32,9 +44,9 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        but_ofertas_recientes = new javax.swing.JButton();
+        but_nuestros_productos = new javax.swing.JButton();
+        but_about_us = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -51,15 +63,15 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTextPane1);
 
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        but_ofertas_recientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                but_ofertas_recientesActionPerformed(evt);
             }
         });
 
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        but_nuestros_productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                but_nuestros_productosActionPerformed(evt);
             }
         });
 
@@ -81,19 +93,19 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(but_ofertas_recientes, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(38, 38, 38)
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(but_nuestros_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(but_about_us, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(46, 46, 46))
                     .addGroup(layout.createSequentialGroup()
@@ -120,36 +132,38 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(but_ofertas_recientes, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(but_nuestros_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(but_about_us, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(122, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void but_nuestros_productosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_nuestros_productosActionPerformed
+        Frm_catalogo catag_cliente = new Frm_catalogo();
+        catag_cliente.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_but_nuestros_productosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void but_ofertas_recientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_ofertas_recientesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_but_ofertas_recientesActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton but_about_us;
+    private javax.swing.JButton but_nuestros_productos;
+    private javax.swing.JButton but_ofertas_recientes;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
