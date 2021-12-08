@@ -175,7 +175,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             menu_admin.setVisible(true);
             this.setVisible(false);
         }else if(user.equals("cliente1") && pwd.equals("0000") && tipo.equals("Cliente")){
-            Frm_ConfigProducto menu_client = new Frm_ConfigProducto();
+            Frm_panelUsuario menu_client = new Frm_panelUsuario();
             menu_client.setVisible(true);
             this.setVisible(false);
         }else{
