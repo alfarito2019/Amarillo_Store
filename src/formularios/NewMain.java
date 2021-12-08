@@ -17,9 +17,9 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Frm_Productos marco_productos = new Frm_Productos();
-        marco_productos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        marco_productos.setVisible(true);
+        Frm_InicioSesion marco_inicio = new Frm_InicioSesion();
+        marco_inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        marco_inicio.setVisible(true);
     }
     
 }
