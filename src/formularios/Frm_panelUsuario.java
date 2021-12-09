@@ -27,6 +27,10 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
         ImageIcon imagenOfertas = new ImageIcon(getClass().getResource("/imagenes/ofertas.png"));
         Icon ofertas = new ImageIcon(imagenOfertas.getImage().getScaledInstance(but_ofertas_recientes.getWidth(), but_ofertas_recientes.getHeight(), Image.SCALE_DEFAULT));
         but_ofertas_recientes.setIcon(ofertas);
+
+        ImageIcon imagenSobre = new ImageIcon(getClass().getResource("/imagenes/sobre nosotros.png"));
+        Icon sobre = new ImageIcon(imagenSobre.getImage().getScaledInstance(but_about_us.getWidth(), but_about_us.getHeight(), Image.SCALE_DEFAULT));
+        but_about_us.setIcon(sobre);
         this.repaint();
     }
 
@@ -72,6 +76,12 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
         but_nuestros_productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 but_nuestros_productosActionPerformed(evt);
+            }
+        });
+
+        but_about_us.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_about_usActionPerformed(evt);
             }
         });
 
@@ -154,6 +164,10 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
     private void but_ofertas_recientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_ofertas_recientesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_but_ofertas_recientesActionPerformed
+
+    private void but_about_usActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_about_usActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_but_about_usActionPerformed
 
 
 
