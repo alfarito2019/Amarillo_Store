@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package formularios;
+import base.Conectate;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
@@ -15,11 +17,14 @@ public class NewMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Frm_InicioSesion marco_inicio = new Frm_InicioSesion();
-        marco_inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        marco_inicio.setVisible(true);
+    public static void main(String[] args) throws SQLException {
+
+         Frm_InicioSesion marco_inicio = new Frm_InicioSesion();
+         marco_inicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         marco_inicio.setVisible(true);
+        //Conectate conexion = new Conectate();
+        //conexion.openConnection();
+        
     }
     
 }

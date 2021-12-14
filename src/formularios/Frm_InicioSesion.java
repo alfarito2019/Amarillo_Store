@@ -1,6 +1,10 @@
 
 package formularios;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -8,10 +12,19 @@ import javax.swing.JOptionPane;
  * @author alfar
  */
 public class Frm_InicioSesion extends javax.swing.JFrame {
-
+    
+    Connection con = null;
+    Statement stmt = null;
+    private final String DB="usuario2019";
+    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
+    private final String USER="alfaro2019";
+    private final String PASS="Aspireone";
+    
  
     public Frm_InicioSesion() {
         initComponents();
+        
+        
         
     }
 
@@ -170,18 +183,26 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         user = txt_usuario.getText();
         pwd = txt_password.getText();
         tipo = cmb_Tipo.getSelectedItem().toString();
-        if(user.equals("alfaro") && pwd.equals("1234") && tipo.equals("Administrador")){
-            Frm_Productos menu_admin = new Frm_Productos();
-            menu_admin.setVisible(true);
-            this.setVisible(false);
-        }else if(user.equals("cliente1") && pwd.equals("0000") && tipo.equals("Cliente")){
-            Frm_panelUsuario menu_client = new Frm_panelUsuario();
-            menu_client.setVisible(true);
-            this.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto");
-            txt_usuario.setText("");
-            txt_password.setText("");
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection(URL, USER, PASS);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select* from usuarios");
+            
+            while(rs.next()){
+                if((rs.getString("usuario").equals(user))&&(rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals(tipo))&&(tipo.equals("Administrador"))){
+                    Frm_Productos menu_admin = new Frm_Productos();
+                    menu_admin.setVisible(true);
+                    this.setVisible(false);
+                }else if((rs.getString("usuario").equals(user))&&(rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals(tipo))&&(tipo.equals("Cliente"))){
+                    Frm_panelUsuario menu_client = new Frm_panelUsuario();
+                    menu_client.setVisible(true);
+                    this.setVisible(false);
+                }
+                
+            }
+        } catch (Exception e) {
         }
         
         
