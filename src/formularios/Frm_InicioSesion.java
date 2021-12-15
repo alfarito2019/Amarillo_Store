@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.awt.Image;
+import java.sql.PreparedStatement;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 /**
@@ -21,6 +22,8 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    PreparedStatement ps;
+    ResultSet rs;
     
  
     public Frm_InicioSesion() {
@@ -180,24 +183,33 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         tipo = cmb_Tipo.getSelectedItem().toString();
         
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection(URL, USER, PASS);
-            stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select* from usuarios");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL,USER,PASS);
             
-            while(rs.next()){
-                if((rs.getString("usuario").equals(user))&&(rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals(tipo))&&(tipo.equals("Administrador"))){
-                    Frm_Productos menu_admin = new Frm_Productos();
-                    menu_admin.setVisible(true);
+            ps = con.prepareStatement("SELECT * FROM usuarios WHERE usuario = ?");
+            ps.setString(1, user);
+            
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                if((rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals("Administrador"))&&(tipo.equals("Administrador"))){
+                    Frm_Productos inicio_admin = new Frm_Productos();
+                    inicio_admin.setVisible(true);
                     this.setVisible(false);
-                }else if((rs.getString("usuario").equals(user))&&(rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals(tipo))&&(tipo.equals("Cliente"))){
-                    Frm_panelUsuario menu_client = new Frm_panelUsuario();
-                    menu_client.setVisible(true);
-                    this.setVisible(false);
+                }else if((rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals("Cliente"))&&(tipo.equals("Cliente"))){
+                    Frm_catalogo inicio_client = new Frm_catalogo();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Username o password incorrecta");
                 }
-                
+            }else{
+                JOptionPane.showMessageDialog(null, "nombre de usuario inexistente");
             }
+            
+            
+            
+            
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         
         

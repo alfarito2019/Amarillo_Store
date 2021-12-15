@@ -3,6 +3,8 @@ package formularios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -14,10 +16,13 @@ public class Frm_Registro extends javax.swing.JFrame {
 
     Connection con = null;
     Statement stmt = null;
+    PreparedStatement ps;
+    ResultSet rs;
     private final String DB="usuario2019";
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    
  
     public Frm_Registro() {
         initComponents();
@@ -177,7 +182,7 @@ public class Frm_Registro extends javax.swing.JFrame {
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         
         String usuario,password,tipo;
-        
+        boolean confirmacion = true;
         usuario = txt_username.getText();
         tipo = cmb_tipo.getSelectedItem().toString();
         password = txt_password.getText();
@@ -189,8 +194,23 @@ public class Frm_Registro extends javax.swing.JFrame {
                 System.out.println("Se ha establecido una conexion a la base de datos " +
                         "\n "+ URL);
                 stmt = con.createStatement();
-                stmt.executeUpdate("INSERT INTO usuarios VALUES('" + usuario + "','" + password + "','" + tipo + "')");
-                System.out.println("Los valores han sido agregados a la base de datos");
+                ResultSet rs = stmt.executeQuery("select* from usuarios");
+                System.out.println(rs.next());
+                
+                while (rs.next()) {
+                    if (rs.getString("usuario").equals(usuario)) {
+                        confirmacion=false;
+                        break;
+                    }
+                }
+                if (confirmacion){
+                        stmt.executeUpdate("INSERT INTO usuarios (usuario, password, tipo) VALUES('" + usuario + "','" + password + "','" + tipo + "')");
+                        System.out.println("Los valores han sido agregados a la base de datos");
+                        JOptionPane.showMessageDialog(this, "Registro exitoso!");
+                        this.txt_username.setText("");
+                        this.txt_password.setText("");
+                    }
+                
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -205,9 +225,7 @@ public class Frm_Registro extends javax.swing.JFrame {
                 }
             }
         }
-        JOptionPane.showMessageDialog(this, "Registro exitoso!");
-        this.txt_username.setText("");
-        this.txt_password.setText("");
+        
     }//GEN-LAST:event_btn_entrarActionPerformed
 
 
