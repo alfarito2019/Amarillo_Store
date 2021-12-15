@@ -58,6 +58,7 @@ public class Frm_catalogo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton2.setText("Volver");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -65,6 +66,8 @@ public class Frm_catalogo extends javax.swing.JFrame {
         });
 
         jScrollPane1.setViewportView(jTextPane1);
+
+        jButton5.setText("Buscar");
 
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
