@@ -126,7 +126,7 @@ public class Frm_Registro extends javax.swing.JFrame {
         );
 
         btn_entrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btn_entrar.setText("Entrar");
+        btn_entrar.setText("Registrar");
         btn_entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_entrarActionPerformed(evt);
@@ -195,7 +195,7 @@ public class Frm_Registro extends javax.swing.JFrame {
                         "\n "+ URL);
                 stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select* from usuarios");
-                System.out.println(rs.next());
+                
                 
                 while (rs.next()) {
                     if (rs.getString("usuario").equals(usuario)) {

@@ -6,10 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.print.attribute.HashAttributeSet;
 import javax.swing.*;
 /**
  *
@@ -44,7 +40,6 @@ public class Frm_Productos extends javax.swing.JFrame {
             
             while(rs.next()){
                 combProducto.addItem(rs.getString("nombre"));
-                
             }
         } catch (Exception e) {
         }

@@ -193,11 +193,13 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             
             if(rs.next()){
                 if((rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals("Administrador"))&&(tipo.equals("Administrador"))){
-                    Frm_Productos inicio_admin = new Frm_Productos();
+                    Frm_panelAdmin inicio_admin = new Frm_panelAdmin();
                     inicio_admin.setVisible(true);
                     this.setVisible(false);
                 }else if((rs.getString("password").equals(pwd))&&(rs.getString("tipo").equals("Cliente"))&&(tipo.equals("Cliente"))){
-                    Frm_catalogo inicio_client = new Frm_catalogo();
+                    Frm_panelUsuario inicio_client = new Frm_panelUsuario();
+                    inicio_client.setVisible(true);
+                    this.setVisible(false);
                 }else{
                     JOptionPane.showMessageDialog(null, "Username o password incorrecta");
                 }

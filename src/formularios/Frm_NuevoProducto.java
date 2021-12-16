@@ -244,11 +244,8 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(URL,USER,PASS);
             if(con != null){
-                System.out.println("Se ha establecido una conexion a la base de datos " +
-                        "\n "+ URL);
                 stmt = con.createStatement();
                 stmt.executeUpdate("INSERT INTO Productos (nombre, precio, cantidad, descripcion) VALUES('" + nombre + "','" + precio + "','" + cantidad + "','" + descripcion + "')");
-                System.out.println("Los valores han sido agregados a la base de datos");
             }
             
         } catch (Exception e) {
