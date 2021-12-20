@@ -5,12 +5,14 @@
  */
 package formularios;
 
+import base.Servicios;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -25,10 +27,9 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
     Statement stmt = null;
     PreparedStatement ps;
     ResultSet rs;
-    private final String DB="usuario2019";
-    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
-    private final String USER="alfaro2019";
-    private final String PASS="Aspireone";
+
+    Servicios base = new Servicios(); 
+    
     public Frm_panelUsuario() {
         initComponents();
         ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/producto.png"));
@@ -187,13 +188,12 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(but_ofertas_recientes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(but_nuestros_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(but_about_us, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)))
-                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(but_about_us, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(but_ofertas_recientes, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(but_nuestros_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,18 +224,15 @@ public class Frm_panelUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_but_about_usActionPerformed
 
     private void btn_enviarReclamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_enviarReclamoActionPerformed
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
-            if(con != null){
-                stmt = con.createStatement();
-                stmt.executeUpdate("INSERT INTO solicitudes (Reclamo) VALUES('" + txt_reclamo.getText()+ "')");
-                JOptionPane.showMessageDialog(this, "Reclamo procesado");
-            }
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        
+        String tabla = "solicitudes";
+        HashMap<String,String> datos= new HashMap<>();
+        datos.put("Reclamo", txt_reclamo.getText());
+        
+        if(base.subirRepetido(tabla, datos)){
+            JOptionPane.showMessageDialog(this, "Reclamo enviado");
         }
+        
     }//GEN-LAST:event_btn_enviarReclamoActionPerformed
 
 

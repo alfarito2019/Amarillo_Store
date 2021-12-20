@@ -69,7 +69,7 @@ public class Frm_catalogo extends javax.swing.JFrame {
             }
             
             tab_productos.setModel(modelo);
-            tab_productos.setRowHeight(60);
+            tab_productos.setRowHeight(80);
         } catch (Exception e) {
             System.out.println(e);
         }

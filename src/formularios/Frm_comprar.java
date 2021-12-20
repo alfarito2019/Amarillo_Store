@@ -2,6 +2,7 @@
 
 package formularios;
 
+import base.Servicios;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,6 +26,8 @@ public class Frm_comprar extends javax.swing.JFrame {
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    
+    Servicios base = new Servicios();
     
     public Frm_comprar(Map<String,Float> productos) {
         initComponents();
@@ -198,6 +201,19 @@ public class Frm_comprar extends javax.swing.JFrame {
         direccion = txt_direccion.getText();
         total = txt_total.getText();
         productos = prd;
+        String tabla ="compras";
+        HashMap<String,String> datos= new HashMap<>();
+        datos.put("metodo", metodo);
+        datos.put("direccion", direccion);
+        datos.put("total", total);
+        datos.put("productos", productos);
+        
+        
+        if(base.subirRepetido(tabla, datos)){
+            JOptionPane.showMessageDialog(this, "\"Se ha efectuado el pedido, llegará a su casa en 5 dias habiles\"");
+            
+        }
+        /*
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(URL,USER,PASS);
@@ -222,7 +238,7 @@ public class Frm_comprar extends javax.swing.JFrame {
         int input = JOptionPane.showConfirmDialog(null,"Se ha efectuado el pedido, llegará a su casa en 5 dias habiles", "Listo!", JOptionPane.DEFAULT_OPTION);
         if(input == 0){
             System.exit(0);
-        }
+        }*/
         
     }//GEN-LAST:event_btn_confirmarActionPerformed
 

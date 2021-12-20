@@ -8,6 +8,8 @@ import java.sql.Statement;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import base.*;
+import java.util.HashMap;
 
 /**
  *
@@ -20,6 +22,9 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    
+    Servicios base = new Servicios(); 
+    
  
     public Frm_NuevoProducto() {
         initComponents();
@@ -240,32 +245,19 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
         cantidad = spn_cantidad.getValue().toString();
         descripcion = txt_descripcion.getText();
         
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
-            if(con != null){
-                stmt = con.createStatement();
-                stmt.executeUpdate("INSERT INTO Productos (nombre, precio, cantidad, descripcion) VALUES('" + nombre + "','" + precio + "','" + cantidad + "','" + descripcion + "')");
-            }
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if(con != null){
-                try {
-                    con.close();
-                    stmt.close();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        JOptionPane.showMessageDialog(this, "Creacion de producto exitoso!");
-        this.txt_nombre.setText("");
-        this.txt_precio.setText("");
-        this.spn_cantidad.setValue(Integer.valueOf(0));
+        String tabla = "Productos";
+        HashMap<String,String> datos= new HashMap<>();
+        datos.put("nombre", nombre);
+        datos.put("precio", precio);
+        datos.put("cantidad", cantidad);
+        datos.put("descripcion", descripcion);
         
+        if(base.subir(tabla, datos,"nombre",nombre)){
+            JOptionPane.showMessageDialog(this, "Creacion de producto exitoso!");
+            this.txt_nombre.setText("");
+            this.txt_precio.setText("");
+            this.spn_cantidad.setValue(Integer.valueOf(0));
+        }
         
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
