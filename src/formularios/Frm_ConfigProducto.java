@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import base.Servicios;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -27,7 +28,13 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    
     String nombre;
+    
+    Servicios servicios = new Servicios();
+    
+    File archivo;
+    
         
     
 
@@ -47,7 +54,7 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
             
             while(rs.next()){
                 cmb_nombre.addItem(rs.getString("nombre"));
-                System.out.println("agregando al combo");
+                
             }
         } catch (Exception e) {
         }
@@ -75,6 +82,8 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cmb_nombre = new javax.swing.JComboBox<>();
         btn_buscar = new javax.swing.JButton();
+        but_eliminar = new javax.swing.JButton();
+        but_cambiar_imagen = new javax.swing.JButton();
         btn_confirmar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
 
@@ -135,6 +144,20 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
             }
         });
 
+        but_eliminar.setText("Eliminar");
+        but_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_eliminarActionPerformed(evt);
+            }
+        });
+
+        but_cambiar_imagen.setText("Cambiar imagen");
+        but_cambiar_imagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_cambiar_imagenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -157,28 +180,45 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
                     .addComponent(txt_precio, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                     .addComponent(txt_cantidad)
                     .addComponent(cmb_nombre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(92, 92, 92)
-                .addComponent(btn_buscar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_buscar)
+                            .addComponent(but_eliminar)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(but_cambiar_imagen)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbl_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(but_cambiar_imagen)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cmb_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_buscar))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(but_eliminar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,8 +324,6 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         
-        
-        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(URL,USER,PASS);
@@ -313,11 +351,52 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_buscarActionPerformed
 
+    private void but_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_eliminarActionPerformed
+        String nom = cmb_nombre.getSelectedItem().toString();
+        if (servicios.eliminar("Productos", "nombre", nom)) {
+            JOptionPane.showMessageDialog(this, "Eliminacion de producto exitosa!");
+            this.cmb_nombre.setSelectedItem(null);
+            this.txt_precio.setText("");
+            this.txt_cantidad.setText("0");
+            this.txt_descripcion.setText("");
+        }
+    }//GEN-LAST:event_but_eliminarActionPerformed
+
+    private void but_cambiar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_cambiar_imagenActionPerformed
+        int resultado;
+        
+        Busca_imagen Buscador = new Busca_imagen();
+        
+        FileNameExtensionFilter formato = new FileNameExtensionFilter("JPG, PNG y GIF", "jpg", "png", "gif");
+        
+        Buscador.JFCimagen.setFileFilter(formato);
+        
+        resultado = Buscador.JFCimagen.showOpenDialog(null);
+        
+        if(JFileChooser.APPROVE_OPTION == resultado){
+            
+            archivo = Buscador.JFCimagen.getSelectedFile();
+            
+            
+            try {
+                ImageIcon imagenProducto = new ImageIcon(archivo.toString());
+                Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lbl_imagen.getWidth(), lbl_imagen.getHeight(), Image.SCALE_DEFAULT));
+                lbl_imagen.setIcon(producto1);
+                this.repaint();
+            } catch (Exception e) {
+            }
+            
+            
+        }
+    }//GEN-LAST:event_but_cambiar_imagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_confirmar;
     private javax.swing.JButton btn_volver;
+    private javax.swing.JButton but_cambiar_imagen;
+    private javax.swing.JButton but_eliminar;
     private javax.swing.JComboBox<String> cmb_nombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -49,8 +49,6 @@ public class Servicios {
         }
         
     }    
-    
-    
     public void closeConnection(Connection connect){
         try {
             connect.close();
@@ -172,6 +170,34 @@ public class Servicios {
         return false;
     }
     
+    public boolean eliminar(String tabla, String llave, String valor){
+        String SQL = "DELETE from "+tabla+" WHERE "+llave+ "='"+valor+"'";
+        
+        int res = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL,USER,PASS);
+            stmt =con.createStatement();
+            ResultSet rs = stmt.executeQuery("select* from "+tabla);
+            stmt.executeUpdate(SQL);
+            return true;
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if(con != null){
+                try {
+                    con.close();
+                    stmt.close();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return false;
+    }
     
     
 }

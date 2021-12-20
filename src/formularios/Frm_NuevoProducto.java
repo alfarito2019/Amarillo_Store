@@ -3,13 +3,15 @@ package formularios;
 
 import java.awt.Image;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import base.*;
 import java.util.HashMap;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -18,13 +20,8 @@ import java.util.HashMap;
 public class Frm_NuevoProducto extends javax.swing.JFrame {
     Connection con = null;
     Statement stmt = null;
-    private final String DB="usuario2019";
-    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
-    private final String USER="alfaro2019";
-    private final String PASS="Aspireone";
-    
     Servicios base = new Servicios(); 
-    
+    File archivo;
  
     public Frm_NuevoProducto() {
         initComponents();
@@ -100,6 +97,11 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
         });
 
         btn_otraImg.setText("Añadir imagen");
+        btn_otraImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_otraImgActionPerformed(evt);
+            }
+        });
 
         spn_cantidad.setMinimumSize(new java.awt.Dimension(40, 20));
 
@@ -257,9 +259,39 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
             this.txt_nombre.setText("");
             this.txt_precio.setText("");
             this.spn_cantidad.setValue(Integer.valueOf(0));
+        }else{
+            JOptionPane.showMessageDialog(this, "Este producto ya esta agregado, si es el caso configura sus propiedades");
         }
         
     }//GEN-LAST:event_btn_confirmarActionPerformed
+
+    private void btn_otraImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_otraImgActionPerformed
+        int resultado;
+        
+        Busca_imagen Buscador = new Busca_imagen();
+        
+        FileNameExtensionFilter formato = new FileNameExtensionFilter("JPG, PNG y GIF", "jpg", "png", "gif");
+        
+        Buscador.JFCimagen.setFileFilter(formato);
+        
+        resultado = Buscador.JFCimagen.showOpenDialog(null);
+        
+        if(JFileChooser.APPROVE_OPTION == resultado){
+            
+            archivo = Buscador.JFCimagen.getSelectedFile();
+            
+            
+            try {
+                ImageIcon imagenProducto = new ImageIcon(archivo.toString());
+                Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
+                lblImagenProducto.setIcon(producto1);
+                this.repaint();
+            } catch (Exception e) {
+            }
+            
+            
+        }
+    }//GEN-LAST:event_btn_otraImgActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
