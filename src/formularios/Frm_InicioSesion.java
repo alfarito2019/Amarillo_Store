@@ -31,6 +31,9 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/overlay.png"));
         Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lbl_fondo.getWidth(), lbl_fondo.getHeight(), Image.SCALE_DEFAULT));
         lbl_fondo.setIcon(producto1);
+        ImageIcon imagenLogo = new ImageIcon(getClass().getResource("/imagenes/logo.png"));
+        Icon logoIcon = new ImageIcon(imagenLogo.getImage().getScaledInstance(lbl_logo.getWidth(), lbl_logo.getHeight(), Image.SCALE_DEFAULT));
+        lbl_logo.setIcon(logoIcon);
         this.repaint();
 
     }
@@ -51,8 +54,11 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         txt_usuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         lbl_fondo = new javax.swing.JLabel();
+        lbl_logo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         bot_IniciarSesion = new javax.swing.JButton();
         bot_Registrarse = new javax.swing.JButton();
+        but_emergencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(79, 79, 79));
@@ -89,6 +95,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tipo de usuario:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, -1, -1));
         jPanel2.add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 170, -1));
@@ -97,6 +104,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         jPanel2.add(cmb_Tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre de Usuario:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, -1, -1));
 
@@ -108,9 +116,16 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         jPanel2.add(txt_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 170, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Contraseña:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
-        jPanel2.add(lbl_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 320));
+        jPanel2.add(lbl_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 570, 320));
+        jPanel2.add(lbl_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 280));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("TE VES BIEN, TE SIENTES BIEN. ");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 250, 40));
 
         bot_IniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         bot_IniciarSesion.setText("Entrar");
@@ -128,6 +143,13 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             }
         });
 
+        but_emergencia.setText("EMERGENCIA");
+        but_emergencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                but_emergenciaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -135,6 +157,8 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(244, 244, 244)
                 .addComponent(bot_Registrarse)
+                .addGap(152, 152, 152)
+                .addComponent(but_emergencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(184, 184, 184))
@@ -150,7 +174,8 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bot_Registrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(but_emergencia))
                 .addGap(0, 28, Short.MAX_VALUE))
         );
 
@@ -223,19 +248,35 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_bot_RegistrarseActionPerformed
 
+    private void but_emergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_emergenciaActionPerformed
+        String tipo = cmb_Tipo.getSelectedItem().toString();
+        if(tipo.equals("Administrador")){
+                    Frm_panelAdmin inicio_admin = new Frm_panelAdmin();
+                    inicio_admin.setVisible(true);
+                    this.setVisible(false);
+                }else if(tipo.equals("Cliente")){
+                    Frm_panelUsuario inicio_client = new Frm_panelUsuario();
+                    inicio_client.setVisible(true);
+                    this.setVisible(false);
+                }
+    }//GEN-LAST:event_but_emergenciaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bot_IniciarSesion;
     private javax.swing.JButton bot_Registrarse;
+    private javax.swing.JButton but_emergencia;
     private javax.swing.JComboBox<String> cmb_Tipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbl_fondo;
+    private javax.swing.JLabel lbl_logo;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
