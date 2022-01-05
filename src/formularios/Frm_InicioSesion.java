@@ -24,6 +24,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
     private final String PASS="Aspireone";
     PreparedStatement ps;
     ResultSet rs;
+    public static String USUARIO;
     
  
     public Frm_InicioSesion() {
@@ -225,9 +226,11 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                     Frm_panelUsuario inicio_client = new Frm_panelUsuario();
                     inicio_client.setVisible(true);
                     this.setVisible(false);
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Username o password incorrecta");
                 }
+                USUARIO = user;
             }else{
                 JOptionPane.showMessageDialog(null, "nombre de usuario inexistente");
             }

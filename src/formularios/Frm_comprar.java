@@ -4,15 +4,13 @@ package formularios;
 
 import base.Servicios;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import java.util.Random;
 
 /**
  *
@@ -22,10 +20,8 @@ public class Frm_comprar extends javax.swing.JFrame {
     String prd="";
     Connection con = null;
     Statement stmt = null;
-    private final String DB="usuario2019";
-    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
-    private final String USER="alfaro2019";
-    private final String PASS="Aspireone";
+
+
     
     Servicios base = new Servicios();
     
@@ -252,7 +248,7 @@ public class Frm_comprar extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_direccionActionPerformed
 
     private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
-        String metodo,direccion,total,productos,telefono;
+        String direccion,total,productos,telefono;
         
         
         direccion = txt_direccion.getText();
@@ -262,16 +258,26 @@ public class Frm_comprar extends javax.swing.JFrame {
         String tabla ="compras";
         HashMap<String,String> datos= new HashMap<>();
         
+        Random claseRandom = new Random();
+        int ncodigo = 1 + claseRandom.nextInt(1000 - 1);
+        String codigo = String.valueOf(ncodigo);
+        
         datos.put("direccion", direccion);
         datos.put("telefono", telefono);
         datos.put("total", total);
         datos.put("productos", productos);
+        datos.put("codigo", codigo);
+        datos.put("usuario", Frm_InicioSesion.USUARIO);
+        datos.put("estado", "Esperando confirmacion");
         
         
         
         if(base.subirRepetido(tabla, datos)){
-            JOptionPane.showMessageDialog(this, "Se ha efectuado el pedido, lo contactaremos para acordar la fecha de entrega");
             
+            JOptionPane.showMessageDialog(this, "Se ha efectuado el pedido, lo contactaremos para acordar la fecha de entrega. Recuerda que el codigo de este pedido es: "+ codigo);
+            int salida = JOptionPane.showConfirmDialog(this, "Desea descargar la factura?", "Factura",JOptionPane.YES_NO_OPTION);
+            System.out.println(salida);
+            System.exit(0);
         }else{
             JOptionPane.showMessageDialog(this, "No se ha podido efectuar el pedido");
         }
