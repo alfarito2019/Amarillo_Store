@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -51,7 +50,7 @@ public class Frm_pedidos extends javax.swing.JFrame {
     public Frm_pedidos() {
         initComponents();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre","Precio","Descripcion"});
+        modelo.setColumnIdentifiers(new Object[]{"Nombre","Precio","Descripcion","telefono"});
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -60,7 +59,7 @@ public class Frm_pedidos extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery("select* from compras");
             
             while(rs.next()){
-                modelo.addRow(new Object[]{rs.getString("Metodo"),rs.getString("direccion"),saltosDeLinea(rs.getString("productos")),rs.getString("total")});
+                modelo.addRow(new Object[]{rs.getString("direccion"),rs.getString("total"),saltosDeLinea(rs.getString("productos")),rs.getString("telefono")});
                 
             }
             

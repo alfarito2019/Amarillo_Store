@@ -1,8 +1,6 @@
 
 package base;
 
-import formularios.Frm_panelAdmin;
-import formularios.Frm_panelUsuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +11,6 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 
 
@@ -57,7 +54,7 @@ public class Servicios {
             Logger.getLogger(Servicios.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private boolean existe(String tabla,String llave,String valor){
+    public boolean existe(String tabla,String llave,String valor){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(URL, USER, PASS);
@@ -107,19 +104,19 @@ public class Servicios {
                 }
                 
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if(con != null){
-                try {
-                    con.close();
-                    stmt.close();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            finally {
+                if(con != null){
+                    try {
+                        con.close();
+                        stmt.close();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
-        }
         }
         
         return false;
@@ -139,16 +136,19 @@ public class Servicios {
                 valores+= "'"+columnaCambio.get(myArray[i])+"'";
             }
         }
+        System.out.println("1");
         
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(URL,USER,PASS);
             if(con != null){
+                System.out.println("2");
                 stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select* from "+tabla);
                 
                 if (rs.next()){
+                    System.out.println("3");
                     stmt.executeUpdate("INSERT INTO "+tabla+" ("+llaves+") VALUES(" + valores + ")");
                     return true;
                 }

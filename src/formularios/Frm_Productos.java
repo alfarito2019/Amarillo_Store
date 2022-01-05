@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 /**
  *
@@ -57,6 +58,16 @@ public class Frm_Productos extends javax.swing.JFrame {
                 txt_cantidad.setText(rs.getString("cantidad"));
                 txt_descripcion.setText(rs.getString("descripcion"));
                 txt_precio.setText(rs.getString("precio"));
+                if(rs.getBinaryStream("imagen")!=null){
+                    Image image = ImageIO.read(rs.getBinaryStream("imagen"));
+                    Icon nuevo = new ImageIcon(image.getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
+                    lblImagenProducto.setIcon(nuevo);
+                    
+                }else{
+                    
+                    lblImagenProducto.setIcon(producto1);
+                }
+                
             }else{
                 JOptionPane.showMessageDialog(null, "No existe un producto con este nombre");
             } 
@@ -346,6 +357,15 @@ public class Frm_Productos extends javax.swing.JFrame {
                 txt_cantidad.setText(rs.getString("cantidad"));
                 txt_descripcion.setText(rs.getString("descripcion"));
                 txt_precio.setText(rs.getString("precio"));
+                if(rs.getBinaryStream("imagen")!=null){
+                    Image image = ImageIO.read(rs.getBinaryStream("imagen"));
+                    Icon nuevo = new ImageIcon(image.getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
+                    lblImagenProducto.setIcon(nuevo);
+                }else{
+                    ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/producto.png"));
+                    Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
+                    lblImagenProducto.setIcon(producto1);
+                }
             }else{
                 JOptionPane.showMessageDialog(null, "No existe un producto con este nombre");
             } 

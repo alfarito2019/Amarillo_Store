@@ -122,10 +122,10 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         jPanel2.add(lbl_fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 570, 320));
         jPanel2.add(lbl_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 280));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("TE VES BIEN, TE SIENTES BIEN. ");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 250, 40));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 250, 40));
 
         bot_IniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         bot_IniciarSesion.setText("Entrar");

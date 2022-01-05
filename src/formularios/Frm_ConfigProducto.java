@@ -12,6 +12,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import base.Servicios;
 import java.io.File;
+import java.io.FileInputStream;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -32,8 +34,8 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
     String nombre;
     
     Servicios servicios = new Servicios();
+    String ruta = null;
     
-    File archivo;
     
         
     
@@ -281,41 +283,84 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_precioActionPerformed
 
     private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
-        String nombre,precio,cantidad,descripcion;
-        
+        String precio,cantidad,descripcion;
         nombre = cmb_nombre.getSelectedItem().toString();
         precio = txt_precio.getText();
         cantidad = txt_cantidad.getText();
         descripcion = txt_descripcion.getText();
-        
-        try {
+        if(ruta!=null){
+          try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(URL,USER,PASS);
+            FileInputStream archivofoto;
             if(con != null){
-                System.out.println("Se ha establecido una conexion a la base de datos " +
-                        "\n "+ URL);
                 stmt = con.createStatement();
-                stmt.executeUpdate("UPDATE Productos SET nombre='" + nombre + "',precio='" + precio + "',cantidad='" + cantidad + "',descripcion='" + descripcion + "'WHERE nombre='" + nombre + "'");
-                System.out.println("Los valores han sido agregados a la base de datos");
+                String sql ="UPDATE Productos SET nombre=?,precio=?,cantidad=?,descripcion=?,imagen=? WHERE nombre='" + nombre + "'";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, nombre);
+                pst.setString(2, precio);
+                pst.setString(3, cantidad);
+                pst.setString(4, descripcion);
+                archivofoto = new FileInputStream(ruta);
+                pst.setBinaryStream(5, archivofoto);
+                System.out.println(pst.executeUpdate());
+                
             }
             
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if(con != null){
-                try {
-                    con.close();
-                    stmt.close();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            finally {
+                if(con != null){
+                    try {
+                        con.close();
+                        stmt.close();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
+            JOptionPane.showMessageDialog(this, "Modificacion de producto exitoso!");
+            this.cmb_nombre.setSelectedItem(null);
+            this.txt_precio.setText("");
+            this.txt_cantidad.setText("0");  
+        }else{
+            try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL,USER,PASS);
+    
+            if(con != null){
+                stmt = con.createStatement();
+                String sql ="UPDATE Productos SET nombre=?,precio=?,cantidad=?,descripcion=? WHERE nombre='" + nombre + "'";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, nombre);
+                pst.setString(2, precio);
+                pst.setString(3, cantidad);
+                pst.setString(4, descripcion);
+                System.out.println(pst.executeUpdate());
+                JOptionPane.showMessageDialog(this, "Modificacion de producto exitoso!");
+            }
+            
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            finally {
+                if(con != null){
+                    try {
+                        con.close();
+                        stmt.close();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+            
+            this.cmb_nombre.setSelectedItem(null);
+            this.txt_precio.setText("");
+            this.txt_cantidad.setText("0"); 
+            this.txt_descripcion.setText("");
         }
-        JOptionPane.showMessageDialog(this, "Modificacion de producto exitoso!");
-        this.cmb_nombre.setSelectedItem(null);
-        this.txt_precio.setText("");
-        this.txt_cantidad.setText("0");
+        
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
@@ -333,6 +378,13 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
                 txt_cantidad.setText(rs.getString("cantidad"));
                 txt_descripcion.setText(rs.getString("descripcion"));
                 txt_precio.setText(rs.getString("precio"));
+                if(rs.getBinaryStream("imagen")!=null){
+                    Image image = ImageIO.read(rs.getBinaryStream("imagen"));
+                    Icon producto1 = new ImageIcon(image.getScaledInstance(lbl_imagen.getWidth(), lbl_imagen.getHeight(), Image.SCALE_DEFAULT));
+                    lbl_imagen.setIcon(producto1);
+                }
+                
+                 
             }else{
                 JOptionPane.showMessageDialog(null, "No existe un producto con este nombre");
             }
@@ -359,31 +411,19 @@ public class Frm_ConfigProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_but_eliminarActionPerformed
 
     private void but_cambiar_imagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_cambiar_imagenActionPerformed
-        int resultado;
-        
-        Busca_imagen Buscador = new Busca_imagen();
-        
         FileNameExtensionFilter formato = new FileNameExtensionFilter("JPG, PNG y GIF", "jpg", "png", "gif");
-        
-        Buscador.JFCimagen.setFileFilter(formato);
-        
-        resultado = Buscador.JFCimagen.showOpenDialog(null);
-        
-        if(JFileChooser.APPROVE_OPTION == resultado){
-            
-            archivo = Buscador.JFCimagen.getSelectedFile();
-            
-            
-            try {
-                ImageIcon imagenProducto = new ImageIcon(archivo.toString());
-                Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lbl_imagen.getWidth(), lbl_imagen.getHeight(), Image.SCALE_DEFAULT));
-                lbl_imagen.setIcon(producto1);
-                this.repaint();
-            } catch (Exception e) {
-            }
-            
-            
+        JFileChooser archivo = new JFileChooser();
+        archivo.addChoosableFileFilter(formato);
+        int ventana = archivo.showOpenDialog(null);
+        if(ventana == JFileChooser.APPROVE_OPTION){
+            File file = archivo.getSelectedFile();
+            ruta =String.valueOf(file);
+            Image img_producto = getToolkit().getImage(ruta);
+            img_producto= img_producto.getScaledInstance(lbl_imagen.getWidth(), lbl_imagen.getHeight(), Image.SCALE_DEFAULT);
+            lbl_imagen.setIcon(new ImageIcon(img_producto));
         }
+        
+        
     }//GEN-LAST:event_but_cambiar_imagenActionPerformed
 
 

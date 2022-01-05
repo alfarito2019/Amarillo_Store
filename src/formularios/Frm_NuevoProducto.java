@@ -4,12 +4,18 @@ package formularios;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.Statement;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import base.*;
+import base.Servicios;
+import java.awt.HeadlessException;
 import java.util.HashMap;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -18,17 +24,22 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author alfar
  */
 public class Frm_NuevoProducto extends javax.swing.JFrame {
+    Servicios base = new Servicios(); 
+    private final String DB="usuario2019";
+    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
+    private final String USER="alfaro2019";
+    private final String PASS="Aspireone";
     Connection con = null;
     Statement stmt = null;
-    Servicios base = new Servicios(); 
-    File archivo;
+    PreparedStatement ps;
+    ResultSet rs;
+    boolean cambio= false;
+    String ruta = null;
+    
  
     public Frm_NuevoProducto() {
         initComponents();
-        ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/producto.png"));
-        Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
-        lblImagenProducto.setIcon(producto1);
-        this.repaint();
+        
     }
 
 
@@ -58,7 +69,6 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(202, 206, 74));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        lblImagenProducto.setText("Imagen del producto");
         lblImagenProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         txt_precio.addActionListener(new java.awt.event.ActionListener() {
@@ -247,51 +257,87 @@ public class Frm_NuevoProducto extends javax.swing.JFrame {
         precio = txt_precio.getText();
         cantidad = spn_cantidad.getValue().toString();
         descripcion = txt_descripcion.getText();
-        
         String tabla = "Productos";
-        HashMap<String,String> datos= new HashMap<>();
-        datos.put("nombre", nombre);
-        datos.put("precio", precio);
-        datos.put("cantidad", cantidad);
-        datos.put("descripcion", descripcion);
-        
-        if(base.subir(tabla, datos,"nombre",nombre)){
-            JOptionPane.showMessageDialog(this, "Creacion de producto exitoso!");
-            this.txt_nombre.setText("");
-            this.txt_precio.setText("");
-            this.spn_cantidad.setValue(Integer.valueOf(0));
+               
+        if (!base.existe(tabla, "nombre", nombre )) {
+            String insertar ="INSERT INTO Productos(nombre,precio,cantidad,descripcion,imagen) VALUES (?,?,?,?,?)";
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(URL,USER,PASS);
+                if (con!=null){
+                    if(ruta!=null){
+                        FileInputStream archivofoto;
+                        ps = con.prepareStatement(insertar);
+                        ps.setString(1, nombre);
+                        ps.setString(2, precio);
+                        ps.setString(3, cantidad);
+                        ps.setString(4, descripcion);
+                        archivofoto = new FileInputStream(ruta);
+                        ps.setBinaryStream(5, archivofoto);
+                        if(ps.executeUpdate()>0){
+                            JOptionPane.showMessageDialog(null, "Se guardó correctamente");
+                            JOptionPane.showMessageDialog(this, "Creacion de producto exitoso!");
+                            this.txt_nombre.setText("");
+                            this.txt_precio.setText("");
+                            this.spn_cantidad.setValue(Integer.valueOf(0));
+                    }else{
+                        ps = con.prepareStatement("INSERT INTO Productos(nombre,precio,cantidad,descripcion) VALUES (?,?,?,?)");
+                        ps.setString(1, nombre);
+                        ps.setString(2, precio);
+                        ps.setString(3, cantidad);
+                        ps.setString(4, descripcion);
+                        JOptionPane.showMessageDialog(null, "Se guardó correctamente");
+                        JOptionPane.showMessageDialog(this, "Creacion de producto exitoso!");
+                        this.txt_nombre.setText("");
+                        this.txt_precio.setText("");
+                        this.spn_cantidad.setValue(Integer.valueOf(0));
+                        }
+                    
+                    } 
+                }else{
+                    System.out.println("conexion fallida");
+                } 
+            } catch (HeadlessException | FileNotFoundException | ClassNotFoundException | SQLException e) {
+                System.out.println(e.getMessage());
+                
+            }
+            finally {
+                if(con != null){
+                    try {
+                        con.close();
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
         }else{
             JOptionPane.showMessageDialog(this, "Este producto ya esta agregado, si es el caso configura sus propiedades");
         }
         
+        
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
     private void btn_otraImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_otraImgActionPerformed
-        int resultado;
-        
-        Busca_imagen Buscador = new Busca_imagen();
-        
+          
         FileNameExtensionFilter formato = new FileNameExtensionFilter("JPG, PNG y GIF", "jpg", "png", "gif");
-        
-        Buscador.JFCimagen.setFileFilter(formato);
-        
-        resultado = Buscador.JFCimagen.showOpenDialog(null);
-        
-        if(JFileChooser.APPROVE_OPTION == resultado){
-            
-            archivo = Buscador.JFCimagen.getSelectedFile();
-            
-            
-            try {
-                ImageIcon imagenProducto = new ImageIcon(archivo.toString());
-                Icon producto1 = new ImageIcon(imagenProducto.getImage().getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT));
-                lblImagenProducto.setIcon(producto1);
-                this.repaint();
-            } catch (Exception e) {
-            }
-            
-            
+        JFileChooser archivo = new JFileChooser();
+        archivo.addChoosableFileFilter(formato);
+        int ventana = archivo.showOpenDialog(null);
+        if(ventana == JFileChooser.APPROVE_OPTION){
+            File file = archivo.getSelectedFile();
+            ruta =String.valueOf(file);
+            Image img_producto = getToolkit().getImage(ruta);
+            img_producto= img_producto.getScaledInstance(lblImagenProducto.getWidth(), lblImagenProducto.getHeight(), Image.SCALE_DEFAULT);
+            lblImagenProducto.setIcon(new ImageIcon(img_producto));
         }
+        
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_btn_otraImgActionPerformed
 
 
