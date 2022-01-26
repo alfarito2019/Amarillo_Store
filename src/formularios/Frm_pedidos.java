@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package formularios;
 
+import base.Servicios;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,58 +21,58 @@ import javax.swing.table.DefaultTableModel;
  * @author Camilo Moreno
  */
 public class Frm_pedidos extends javax.swing.JFrame {
+
     Connection con = null;
     Statement stmt = null;
-    private final String DB="usuario2019";
-    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
-    private final String USER="alfaro2019";
-    private final String PASS="Aspireone";
+    private final String DB = "usuario2019";
+    private final String URL = "jdbc:mysql://db4free.net:3306/" + DB + "?zeroDateTimeBehavior=CONVERT_TO_NULL";
+    private final String USER = "alfaro2019";
+    private final String PASS = "Aspireone";
     PreparedStatement ps;
     ResultSet rs;
-    Map <String, Float> agregados = new HashMap <> ();
+    Map<String, Float> agregados = new HashMap<>();
     String estado;
+    Servicios base = new Servicios();
+
     private String saltosDeLinea(String descripción) {
         String convertido = "";
         for (int i = 0; i < descripción.length(); i++) {
             Character cha = descripción.charAt(i);
-            
-            
-            if((i%14>9)&&(String.valueOf(cha).equals(" "))){
-                
-                convertido= convertido+ "<br> ";
+
+            if ((i % 14 > 9) && (String.valueOf(cha).equals(" "))) {
+
+                convertido = convertido + "<br> ";
             }
             convertido = convertido + cha;
         }
         convertido = "<HTML> " + convertido + " </HTML>";
-        
+
         return convertido;
     }
-    
-    
+
     public Frm_pedidos() {
         initComponents();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre","Precio","Descripcion","telefono","codigo","estado"});
-        
-        
+        modelo.setColumnIdentifiers(new Object[]{"Usuario", "Precio", "Descripcion", "telefono", "codigo", "estado", "Fecha"});
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(URL, USER, PASS);
             stmt = con.createStatement();
             rs = stmt.executeQuery("select* from compras");
-            
-            while(rs.next()){
-                modelo.addRow(new Object[]{rs.getString("direccion"),rs.getString("total"),saltosDeLinea(rs.getString("productos")),rs.getString("telefono"),rs.getString("codigo"),rs.getString("estado")});
-                
+
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getString("usuario"), rs.getString("total"), saltosDeLinea(rs.getString("productos")), rs.getString("telefono"), rs.getString("codigo"), rs.getString("estado"), rs.getString("Fecha")});
+
             }
-            
+
             tab_productos.setModel(modelo);
             tab_productos.setRowHeight(60);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -88,6 +88,8 @@ public class Frm_pedidos extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cmb_estado = new javax.swing.JComboBox<>();
         btn_modificar = new javax.swing.JButton();
+        btn_factura = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,6 +181,16 @@ public class Frm_pedidos extends javax.swing.JFrame {
             }
         });
 
+        btn_factura.setText("Generar Factura");
+        btn_factura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_facturaActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Recuerde, la factura unicamente\\nse puede generar si el estado\\ndel producto es \"Entregado\"");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,22 +202,27 @@ public class Frm_pedidos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
+                        .addComponent(cmb_estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmb_estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(20, 20, 20))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 80, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addGap(50, 50, 50))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_modificar)
-                                .addGap(92, 92, 92))))
+                                .addGap(95, 95, 95))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(50, 50, 50))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_factura)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,14 +231,18 @@ public class Frm_pedidos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmb_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btn_modificar)))
+                        .addGap(30, 30, 30)
+                        .addComponent(btn_modificar)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(btn_volver)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_volver)
+                    .addComponent(btn_factura))
                 .addGap(31, 31, 31))
         );
 
@@ -240,7 +261,7 @@ public class Frm_pedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
-        Frm_panelAdmin panel =new Frm_panelAdmin();
+        Frm_panelAdmin panel = new Frm_panelAdmin();
         panel.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_volverActionPerformed
@@ -250,7 +271,7 @@ public class Frm_pedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cmb_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_estadoActionPerformed
-        
+
     }//GEN-LAST:event_cmb_estadoActionPerformed
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
@@ -258,43 +279,76 @@ public class Frm_pedidos extends javax.swing.JFrame {
         int filaselect;
         String codigo;
         filaselect = tab_productos.getSelectedRow();
-        
+
         if (filaselect == -1) {
             JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada.");
-            
-        }else{
-            
-            codigo = (String)tab_productos.getValueAt(filaselect, 4);
+
+        } else {
+
+            codigo = (String) tab_productos.getValueAt(filaselect, 4);
             try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
-            if(con != null){
-                stmt = con.createStatement();
-                String sql ="UPDATE compras SET estado=? WHERE codigo='" + codigo + "'";
-                PreparedStatement pst = con.prepareStatement(sql);
-                pst.setString(1, estado);
-                System.out.println(pst.executeUpdate());
-                System.out.println(estado);
-                System.out.println(codigo);
-                JOptionPane.showMessageDialog(null, "Estado actualizado con exito");
-                tab_productos.setValueAt(estado, filaselect, 5);
-                
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(URL, USER, PASS);
+                if (con != null) {
+                    stmt = con.createStatement();
+                    String sql = "UPDATE compras SET estado=? WHERE codigo='" + codigo + "'";
+                    PreparedStatement pst = con.prepareStatement(sql);
+                    pst.setString(1, estado);
+                    System.out.println(pst.executeUpdate());
+                    System.out.println(estado);
+                    System.out.println(codigo);
+                    JOptionPane.showMessageDialog(null, "Estado actualizado con exito");
+                    tab_productos.setValueAt(estado, filaselect, 5);
 
-
-
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
-        }
-        
+
     }//GEN-LAST:event_btn_modificarActionPerformed
 
+    private void btn_facturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_facturaActionPerformed
+        int filaselect;
+        filaselect = tab_productos.getSelectedRow();
+        estado = (String)tab_productos.getValueAt(filaselect, 5);
+        String codigo;
+        
+
+        if (filaselect == -1) {
+            JOptionPane.showMessageDialog(null, "Ninguna fila seleccionada.");
+
+        } else {
+
+            codigo = (String) tab_productos.getValueAt(filaselect, 4);
+            if (estado.equals("Entregado")) {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                    con = DriverManager.getConnection(URL, USER, PASS);
+                    stmt = con.createStatement();
+                    rs = stmt.executeQuery("select* from compras WHERE codigo='" + codigo + "'");
+
+                    while (rs.next()) {
+                        base.facturar(rs.getString("direccion"), rs.getString("telefono"), rs.getString("total"), rs.getString("productos"), rs.getString("usuario"), codigo, "Estado de la compra: " + estado);
+                        JOptionPane.showMessageDialog(this, "Factura generada con exito, ubicada en descargas");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "El pedido no ha sido entregado.");
+            }
+        }
+    }//GEN-LAST:event_btn_facturaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_volver;
     private javax.swing.JComboBox<String> cmb_estado;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

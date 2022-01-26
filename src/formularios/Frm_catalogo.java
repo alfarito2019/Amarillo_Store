@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package formularios;
 
 import java.sql.Connection;
@@ -21,60 +20,60 @@ import javax.swing.table.DefaultTableModel;
  * @author Camilo Moreno
  */
 public class Frm_catalogo extends javax.swing.JFrame {
+
     Connection con = null;
     Statement stmt = null;
-    private final String DB="usuario2019";
-    private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
-    private final String USER="alfaro2019";
-    private final String PASS="Aspireone";
+    private final String DB = "usuario2019";
+    private final String URL = "jdbc:mysql://db4free.net:3306/" + DB + "?zeroDateTimeBehavior=CONVERT_TO_NULL";
+    private final String USER = "alfaro2019";
+    private final String PASS = "Aspireone";
     PreparedStatement ps;
     ResultSet rs;
-    Map <String, Float> agregados = new HashMap <> ();
+    Map<String, Float> agregados = new HashMap<>();
+
     private String saltosDeLinea(String descripción) {
         String convertido = "";
         for (int i = 0; i < descripción.length(); i++) {
             Character cha = descripción.charAt(i);
-            
-            
-            if((i%14>9)&&(String.valueOf(cha).equals(" "))){
-                
-                convertido= convertido+ "<br> ";
+
+            if ((i % 14 > 9) && (String.valueOf(cha).equals(" "))) {
+
+                convertido = convertido + "<br> ";
             }
             convertido = convertido + cha;
         }
         convertido = "<HTML> " + convertido + " </HTML>";
-        
+
         return convertido;
     }
-    
-    
+
     public Frm_catalogo() {
         initComponents();
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.setColumnIdentifiers(new Object[]{"Nombre","Precio","Descripcion"});
-        
+        modelo.setColumnIdentifiers(new Object[]{"Nombre", "Precio", "Descripcion"});
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(URL, USER, PASS);
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select* from Productos");
-            
-            while(rs.next()){
-                if(rs.getString("cantidad").equals("0")){
+
+            while (rs.next()) {
+                if (rs.getString("cantidad").equals("0")) {
                     continue;
                 }
-                modelo.addRow(new Object[]{rs.getString("nombre"),rs.getString("precio"),saltosDeLinea(rs.getString("Descripcion"))});
+                modelo.addRow(new Object[]{rs.getString("nombre"), rs.getString("precio"), saltosDeLinea(rs.getString("Descripcion"))});
                 cmb_producto_carro.addItem(rs.getString("nombre"));
-                
+
             }
-            
+
             tab_productos.setModel(modelo);
             tab_productos.setRowHeight(80);
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -315,22 +314,22 @@ public class Frm_catalogo extends javax.swing.JFrame {
         String seleccion = cmb_producto_carro.getSelectedItem().toString();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
+            con = DriverManager.getConnection(URL, USER, PASS);
             ps = con.prepareStatement("SELECT * FROM Productos WHERE nombre = ?");
             ps.setString(1, seleccion);
-            
+
             rs = ps.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 txt_cantidad.setText(rs.getString("cantidad"));
                 if (Integer.parseInt(rs.getString("cantidad")) <= 0) {
                     btn_addCarro.setEnabled(false);
-                    int input = JOptionPane.showConfirmDialog(null,"Se ha terminado este producto, escoge otro :)", ":(", JOptionPane.DEFAULT_OPTION);
-                }else{
+                    int input = JOptionPane.showConfirmDialog(null, "Se ha terminado este producto, escoge otro :)", ":(", JOptionPane.DEFAULT_OPTION);
+                } else {
                     btn_addCarro.setEnabled(true);
                 }
             }
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -338,39 +337,41 @@ public class Frm_catalogo extends javax.swing.JFrame {
 
     private void btn_addCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addCarroActionPerformed
         String seleccion = cmb_producto_carro.getSelectedItem().toString();
-        Integer cantidad; 
-        Integer resultante =0;
+        Integer cantidad;
+        Integer resultante = 0;
         Float precio;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
-            ps = con.prepareStatement("SELECT * FROM Productos WHERE nombre = ?");
-            ps.setString(1, seleccion);
-            rs = ps.executeQuery();
-            
-            if(rs.next()){
-                cantidad=Integer.valueOf(spn_cantidad.getValue().toString());
-                resultante = Integer.parseInt(rs.getString("cantidad"))-cantidad ;
-                if (resultante <= 0) {
-                    btn_addCarro.setEnabled(false);
-                    int input = JOptionPane.showConfirmDialog(null,"Ufff cogiste los ultimos de ese producto, ya traeran mas.", ":(", JOptionPane.DEFAULT_OPTION);
+        if (!"0".equals(spn_cantidad.getValue().toString().trim())) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection(URL, USER, PASS);
+                ps = con.prepareStatement("SELECT * FROM Productos WHERE nombre = ?");
+                ps.setString(1, seleccion);
+                rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    cantidad = Integer.valueOf(spn_cantidad.getValue().toString());
+                    resultante = Integer.parseInt(rs.getString("cantidad")) - cantidad;
+                    if (resultante <= 0) {
+                        btn_addCarro.setEnabled(false);
+                        int input = JOptionPane.showConfirmDialog(null, "Ufff cogiste los ultimos de ese producto, ya traeran mas.", ":(", JOptionPane.DEFAULT_OPTION);
+                    }
+                    precio = Float.valueOf(rs.getString("precio"));
+                    agregados.put(seleccion, cantidad * precio);
+
                 }
-                precio=Float.valueOf(rs.getString("precio"));
-                agregados.put(seleccion, cantidad*precio);
-                
-                
-                
-                
+                if (con != null) {
+                    stmt = con.createStatement();
+                    stmt.executeUpdate("UPDATE Productos SET cantidad='" + String.valueOf(resultante) + "'WHERE nombre='" + seleccion + "'");
+                    txt_cantidad.setText(String.valueOf(resultante));
+
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            if(con != null){
-                stmt = con.createStatement();
-                stmt.executeUpdate("UPDATE Productos SET cantidad='" + String.valueOf(resultante) + "'WHERE nombre='" + seleccion + "'");
-                txt_cantidad.setText(String.valueOf(resultante));
-                
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        }else{
+            JOptionPane.showMessageDialog(null, "No ha establecido la cantidad de este producto");
         }
+
     }//GEN-LAST:event_btn_addCarroActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

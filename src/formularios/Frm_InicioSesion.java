@@ -59,7 +59,6 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         bot_IniciarSesion = new javax.swing.JButton();
         bot_Registrarse = new javax.swing.JButton();
-        but_emergencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(79, 79, 79));
@@ -144,13 +143,6 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             }
         });
 
-        but_emergencia.setText("EMERGENCIA");
-        but_emergencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                but_emergenciaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -158,8 +150,6 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(244, 244, 244)
                 .addComponent(bot_Registrarse)
-                .addGap(152, 152, 152)
-                .addComponent(but_emergencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(184, 184, 184))
@@ -175,8 +165,7 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bot_Registrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(but_emergencia))
+                    .addComponent(bot_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 28, Short.MAX_VALUE))
         );
 
@@ -251,24 +240,10 @@ public class Frm_InicioSesion extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_bot_RegistrarseActionPerformed
 
-    private void but_emergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_but_emergenciaActionPerformed
-        String tipo = cmb_Tipo.getSelectedItem().toString();
-        if(tipo.equals("Administrador")){
-                    Frm_panelAdmin inicio_admin = new Frm_panelAdmin();
-                    inicio_admin.setVisible(true);
-                    this.setVisible(false);
-                }else if(tipo.equals("Cliente")){
-                    Frm_panelUsuario inicio_client = new Frm_panelUsuario();
-                    inicio_client.setVisible(true);
-                    this.setVisible(false);
-                }
-    }//GEN-LAST:event_but_emergenciaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bot_IniciarSesion;
     private javax.swing.JButton bot_Registrarse;
-    private javax.swing.JButton but_emergencia;
     private javax.swing.JComboBox<String> cmb_Tipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

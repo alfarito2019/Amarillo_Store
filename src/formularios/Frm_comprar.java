@@ -52,7 +52,6 @@ public class Frm_comprar extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btn_confirmar = new javax.swing.JButton();
-        btn_volver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lst_productos = new javax.swing.JList<>();
         txt_total = new javax.swing.JTextField();
@@ -80,13 +79,6 @@ public class Frm_comprar extends javax.swing.JFrame {
         btn_confirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_confirmarActionPerformed(evt);
-            }
-        });
-
-        btn_volver.setText("Volver");
-        btn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_volverActionPerformed(evt);
             }
         });
 
@@ -154,9 +146,7 @@ public class Frm_comprar extends javax.swing.JFrame {
                 .addGap(73, 73, 73)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
@@ -165,16 +155,14 @@ public class Frm_comprar extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(124, 124, 124))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(btn_confirmar)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(124, 124, 124))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_metodo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_confirmar)
+                            .addComponent(lbl_metodo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(87, 87, 87))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(105, 105, 105)
@@ -208,17 +196,15 @@ public class Frm_comprar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 101, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_metodo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_volver)
-                            .addComponent(btn_confirmar))
-                        .addGap(33, 33, 33))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_confirmar)
+                        .addGap(32, 32, 32))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -234,10 +220,6 @@ public class Frm_comprar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_volverActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -259,7 +241,7 @@ public class Frm_comprar extends javax.swing.JFrame {
         HashMap<String,String> datos= new HashMap<>();
         
         Random claseRandom = new Random();
-        int ncodigo = 1 + claseRandom.nextInt(1000 - 1);
+        int ncodigo = 1 + claseRandom.nextInt(1000000 - 1);
         String codigo = String.valueOf(ncodigo);
         
         datos.put("direccion", direccion);
@@ -275,38 +257,11 @@ public class Frm_comprar extends javax.swing.JFrame {
         if(base.subirRepetido(tabla, datos)){
             
             JOptionPane.showMessageDialog(this, "Se ha efectuado el pedido, lo contactaremos para acordar la fecha de entrega. Recuerda que el codigo de este pedido es: "+ codigo);
-            int salida = JOptionPane.showConfirmDialog(this, "Desea descargar la factura?", "Factura",JOptionPane.YES_NO_OPTION);
-            System.out.println(salida);
-            System.exit(0);
+            
         }else{
             JOptionPane.showMessageDialog(this, "No se ha podido efectuar el pedido");
         }
-        /*
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(URL,USER,PASS);
-            if(con != null){
-                stmt = con.createStatement();
-                stmt.executeUpdate("INSERT INTO compras (metodo,direccion,total,productos) VALUES('" + metodo + "','" + direccion + "','" + total + "','" + productos + "')");
-            }
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        finally {
-            if(con != null){
-                try {
-                    con.close();
-                    stmt.close();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-        int input = JOptionPane.showConfirmDialog(null,"Se ha efectuado el pedido, llegará a su casa en 5 dias habiles", "Listo!", JOptionPane.DEFAULT_OPTION);
-        if(input == 0){
-            System.exit(0);
-        }*/
+        
         
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
@@ -316,7 +271,6 @@ public class Frm_comprar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_confirmar;
-    private javax.swing.JButton btn_volver;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel2;

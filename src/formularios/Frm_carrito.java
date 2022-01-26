@@ -84,7 +84,6 @@ public class Frm_carrito extends javax.swing.JFrame {
         btn_confirmar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tab_productos = new javax.swing.JTable();
-        btn_volver = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -134,13 +133,6 @@ public class Frm_carrito extends javax.swing.JFrame {
         tab_productos.setRowHeight(30);
         jScrollPane2.setViewportView(tab_productos);
 
-        btn_volver.setText("Volver");
-        btn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_volverActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(239, 184, 16));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -172,9 +164,7 @@ public class Frm_carrito extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_confirmar)
                 .addGap(43, 43, 43))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -187,9 +177,7 @@ public class Frm_carrito extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_confirmar)
-                    .addComponent(btn_volver))
+                .addComponent(btn_confirmar)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -207,10 +195,6 @@ public class Frm_carrito extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_volverActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -223,7 +207,6 @@ public class Frm_carrito extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_confirmar;
-    private javax.swing.JButton btn_volver;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel4;
