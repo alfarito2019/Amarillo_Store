@@ -28,7 +28,7 @@ public class Grafico {
 
     public JFreeChart crearGrafica(DefaultCategoryDataset dataset) {
 
-        final JFreeChart chart = ChartFactory.createBarChart("Compras a través del tiepo", "Fecha", "Cantidad",
+        final JFreeChart chart = ChartFactory.createBarChart("Compras a través del tiempo", "Fecha", "Cantidad",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true, // uso de leyenda

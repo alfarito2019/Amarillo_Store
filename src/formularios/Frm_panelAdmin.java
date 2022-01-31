@@ -23,6 +23,8 @@ public class Frm_panelAdmin extends javax.swing.JFrame {
     private final String URL="jdbc:mysql://db4free.net:3306/"+DB+"?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private final String USER="alfaro2019";
     private final String PASS="Aspireone";
+    
+    
     public Frm_panelAdmin() {
         initComponents();
         ImageIcon imagenProducto = new ImageIcon(getClass().getResource("/imagenes/producto.png"));
